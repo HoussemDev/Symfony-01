@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="symfony-01@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="symfony-01">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="bad_puns_counter"/>
+    <schema id="4" parent="1" name="bdcivil"/>
+    <schema id="5" parent="1" name="cnss_db"/>
+    <schema id="6" parent="1" name="dbdrupal"/>
+    <schema id="7" parent="1" name="dbproject"/>
+    <schema id="8" parent="1" name="dbproject2"/>
+    <schema id="9" parent="1" name="dbproject3"/>
+    <schema id="10" parent="1" name="information_schema"/>
+    <schema id="11" parent="1" name="masuperagence"/>
+    <schema id="12" parent="1" name="miniprojet"/>
+    <schema id="13" parent="1" name="mysql"/>
+    <schema id="14" parent="1" name="performance_schema"/>
+    <schema id="15" parent="1" name="sys"/>
+    <schema id="16" parent="1" name="viasyst_preprod_v2"/>
+    <table id="17" parent="2" name="micro_post"/>
+    <table id="18" parent="2" name="migration_versions"/>
+    <column id="19" parent="17" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="20" parent="17" name="text">
+      <Position>2</Position>
+      <DataType>varchar(280)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="21" parent="17" name="time">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="22" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="23" parent="18" name="version">
+      <Position>1</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="24" parent="18" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>version</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>
