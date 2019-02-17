@@ -2,11 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="this e-mail is already used")
+ * @UniqueEntity(fields="username", message="this username is already used")
  */
 class User implements UserInterface, \Serializable
 {
@@ -19,6 +24,8 @@ class User implements UserInterface, \Serializable
 
 	/**
 	 * @ORM\Column(type="string", length=50, unique=true)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=5, max=50)
 	 */
 	private $username;
 
@@ -28,14 +35,34 @@ class User implements UserInterface, \Serializable
 	private $password;
 
 	/**
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=8 ,max=4096)
+	 */
+	private $plainPassword;
+
+	/**
 	 * @ORM\Column(type="string", length=254, unique=true)
+	 * @Assert\NotBlank()
+	 * @Assert\Email()
 	 */
 	private $email;
 
 	/**
 	 * @ORM\Column(type="string", length=50)
+	 * @Assert\NotBlank()
+	 * @Assert\Length(min=4, max=50)
 	 */
 	private $fullName;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="App\Entity\MicroPost", mappedBy="user")
+	 */
+	private $posts;
+
+	public function __construct()
+	{
+		$this->posts = new ArrayCollection();
+	}
 
 	public function getRoles()
 	{
@@ -135,4 +162,29 @@ class User implements UserInterface, \Serializable
 	{
 		return $this->id;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPlainPassword()
+	{
+		return $this->plainPassword;
+	}
+
+	/**
+	 * @param mixed $plainPassword
+	 */
+	public function setPlainPassword($plainPassword)
+	{
+		$this->plainPassword = $plainPassword;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPosts()
+	{
+		return $this->posts;
+	}
+
 }
