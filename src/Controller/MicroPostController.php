@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 use App\Entity\MicroPost;
+use App\Entity\User;
 use App\Form\MicroPostType;
 use App\Repository\MicroPostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -111,7 +112,7 @@ class MicroPostController
 	{
 		$user = $tokenStorage->getToken()->getUser();
 		$microPost = new MicroPost();
-		$microPost->setTime(new \DateTime());
+//		$microPost->setTime(new \DateTime());
 		$microPost->setUser($user);
 
 		$form = $this->formFactory->create(MicroPostType::class, $microPost);
@@ -141,6 +142,22 @@ class MicroPostController
 	$this->flashBag->add('notice', 'Micro Post was deleted');
 
 		return new RedirectResponse($this->router->generate('micro_post_index'));
+
+	}
+
+	/**
+	 * @Route("/user/{username}", name="micro_post_user")
+	 */
+	public function userPost(User $userWithPosts)
+	{
+		$html = $this->twig->render('micro-post/index.html.twig',
+			[
+				'posts' => $this->microPostRepository->findBy(
+					['user' => $userWithPosts],
+					 ['time' => 'DESC']
+				),
+			]);
+		return new Response($html);
 
 	}
 
